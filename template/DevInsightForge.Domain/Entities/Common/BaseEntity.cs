@@ -1,3 +1,3 @@
 ﻿namespace DevInsightForge.Domain.Entities.Common;
 
-public abstract class BaseEntity { }
+public class BaseEntity { }
