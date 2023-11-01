@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using DevInsightForge.Application.Authentication.Commands.AuthenticateUser;
+using DevInsightForge.Application.Common.ViewModels.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInsightForge.WebAPI.Controllers;
@@ -12,5 +14,12 @@ public class AuthenticationController : ControllerBase
     public AuthenticationController(ISender sender)
     {
         _sender = sender;
+    }
+
+    [HttpPost(nameof(Authenticate))]
+    [AllowAnonymous]
+    public async Task<TokenResponseModel> Authenticate(AuthenticateUserCommand command)
+    {
+        return await _sender.Send(command);
     }
 }

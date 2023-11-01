@@ -14,9 +14,9 @@ public static class SwaggerServiceExtension
             // Application Specifications
             setup.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Career Web API",
+                Title = "DevInsightForge.API",
                 Version = "v1",
-                Description = "The Career Web API built with ASP.NET Core, it ensures secure and efficient communication through JSON Web Tokens (JWT) for authentication.",
+                Description = "The DevInsightForge.API built with ASP.NET Core, it ensures secure and efficient communication through JSON Web Tokens (JWT) for authentication.",
                 Contact = new OpenApiContact
                 {
                     Name = "ZèD",

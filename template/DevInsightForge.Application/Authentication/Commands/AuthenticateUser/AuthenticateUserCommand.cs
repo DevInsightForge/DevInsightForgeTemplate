@@ -8,6 +8,7 @@ using System.ComponentModel;
 using DevInsightForge.Application.Common.ViewModels.Authentication;
 using DevInsightForge.Application.Common.Services;
 using DevInsightForge.Application.Common.Exceptions;
+using DevInsightForge.Application.Common.Interfaces.DataAccess.Repositories;
 
 namespace DevInsightForge.Application.Authentication.Commands.AuthenticateUser;
 
@@ -22,16 +23,16 @@ public sealed record AuthenticateUserCommand : IRequest<TokenResponseModel>
 
 internal sealed class AuthenticateUserCommandHandler : IRequestHandler<AuthenticateUserCommand, TokenResponseModel>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IGenericRepository<UserModel> _userRepository;
     private readonly IPasswordHasher<UserModel> _passwordHasher;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserRepository _userRepository;
     private readonly TokenServices _tokenServices;
     private readonly JwtSettings _jwtSettings;
 
     public AuthenticateUserCommandHandler(
-        IGenericRepository<UserModel> userRepository,
         IPasswordHasher<UserModel> passwordHasher,
         IOptions<JwtSettings> jwtSettings,
+        IUserRepository userRepository,
         IUnitOfWork unitOfWork,
         TokenServices tokenServices)
     {
