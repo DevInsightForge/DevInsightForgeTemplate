@@ -1,8 +1,5 @@
 ﻿using DevInsightForge.Domain.Entities.User;
 using FluentValidation.AspNetCore;
-using FluentValidation;
-using Mapster;
-using MediatR;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
