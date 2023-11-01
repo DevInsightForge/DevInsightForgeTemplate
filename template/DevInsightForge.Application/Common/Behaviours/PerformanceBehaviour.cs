@@ -1,6 +1,4 @@
-﻿using DevInsightForge.Application.Common.Services;
-using MediatR;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace DevInsightForge.Application.Common.Behaviours;

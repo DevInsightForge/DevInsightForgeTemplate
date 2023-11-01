@@ -61,14 +61,6 @@ public static class AuthenticationServiceExtension
                     Status = (int)HttpStatusCode.Unauthorized,
                     Instance = context.Request.Path.Value
                 });
-            },
-            OnMessageReceived = context =>
-            {
-                if (context.Request.Cookies.ContainsKey("Access-Token"))
-                {
-                    context.Token = context.Request.Cookies["Access-Token"];
-                }
-                return Task.CompletedTask;
             }
         };
     }

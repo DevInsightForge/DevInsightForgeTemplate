@@ -57,8 +57,7 @@ internal sealed class AuthenticateUserCommandHandler : IRequestHandler<Authentic
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var expiryDate = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationInMinutes);
-        string accessToken = _tokenServices.GenerateJwtToken(user.Id, expiryDate);
-        _tokenServices.SetAccessTokenCookie(accessToken, expiryDate);
+        string accessToken = _tokenServices.GenerateJwtToken(user, expiryDate);
 
         return new TokenResponseModel()
         {

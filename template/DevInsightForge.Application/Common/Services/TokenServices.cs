@@ -1,5 +1,6 @@
 ﻿using DevInsightForge.Application.Common.Configurations.Settings;
 using DevInsightForge.Application.Common.Exceptions;
+using DevInsightForge.Application.Common.ViewModels.User;
 using DevInsightForge.Domain.Entities.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -12,8 +13,11 @@ namespace DevInsightForge.Application.Common.Services;
 
 public class TokenServices
 {
-    // Constants for claim types
-    private const string ClaimTypeUserId = ClaimTypes.NameIdentifier;
+    // Custom Claims
+    private const string UserIdClaim = ClaimTypes.NameIdentifier;
+    private const string EmailClaim = "email";
+    private const string DateJoinedClaim = "dj";
+    private const string LastLoginClaim = "ll";
 
     private readonly IHttpContextAccessor _contextAccessor;
     private readonly JwtSettings _jwtSettings;
@@ -26,19 +30,44 @@ public class TokenServices
 
     public UserId GetLoggedInUserId()
     {
-        var userIdClaim = (_contextAccessor?.HttpContext?.User?.FindFirst(ClaimTypeUserId)) ?? throw new BadRequestException();
-        if (!Ulid.TryParse(userIdClaim.Value?.Trim(), out var parsedUserId)) throw new BadRequestException();
+        var userIdClaim = (_contextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)) ?? throw new BadRequestException("User ID claim not found!");
+        if (!Ulid.TryParse(userIdClaim.Value?.Trim(), out var parsedUserId)) throw new BadRequestException("User ID claim is not valid!");
 
         return new UserId(parsedUserId);
     }
 
-    public string GenerateJwtToken(UserId userId, DateTime expiryDate)
+    public UserResponseModel GetLoggedInUser()
     {
-        if (userId is null) throw new ArgumentNullException(nameof(userId));
+        ClaimsPrincipal principal = _contextAccessor?.HttpContext?.User ?? throw new BadRequestException("User claims are not found!");
+        string userId = principal.FindFirstValue(UserIdClaim) ?? throw new BadRequestException("User ID claim not found!");
+        string userEmail = principal.FindFirstValue(EmailClaim) ?? throw new BadRequestException("User Email claim not found!");
+        string userDateJoined = principal.FindFirstValue(DateJoinedClaim) ?? throw new BadRequestException("User DateJoined claim not found!");
+        string userLastLogin = principal.FindFirstValue(LastLoginClaim) ?? throw new BadRequestException("User LastLogin claim not found!");
+
+        DateTime dateJoined = DateTime.TryParse(userDateJoined, out var dj) ? dj : throw new BadRequestException("User DateJoined claim is not a valid DateTime");
+        DateTime lastLogin = DateTime.TryParse(userLastLogin, out var ll) ? ll : throw new BadRequestException("User LastLogin claim is not a valid DateTime");
+
+
+        return new UserResponseModel
+        {
+            UserId = userId,
+            Email = userEmail,
+            DateJoined = dateJoined,
+            LastLogin = lastLogin
+        };
+    }
+
+    public string GenerateJwtToken(UserModel user, DateTime? expiryDate)
+    {
+        if (user is null) throw new ArgumentNullException(nameof(user));
+        expiryDate ??= DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationInMinutes);
 
         var authClaims = new List<Claim>
         {
-            new Claim(ClaimTypeUserId, userId.Value.ToString(), ClaimValueTypes.String),
+            new Claim(UserIdClaim, user.Id.ToString(), ClaimValueTypes.Sid),
+            new Claim(EmailClaim, user.Email, ClaimValueTypes.Email),
+            new Claim(DateJoinedClaim, user.DateJoined.ToString(), ClaimValueTypes.DateTime),
+            new Claim(LastLoginClaim, user.LastLogin.ToString(), ClaimValueTypes.DateTime),
         };
 
         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
@@ -53,27 +82,4 @@ public class TokenServices
 
         return new JwtSecurityTokenHandler().WriteToken(securityToken);
     }
-
-    public void SetAccessTokenCookie(string token, DateTime expiryDate)
-    {
-        _contextAccessor?.HttpContext?.Response.Cookies.Append("Access-Token", token, new CookieOptions
-        {
-            Secure = true,
-            HttpOnly = true,
-            SameSite = SameSiteMode.None,
-            Expires = expiryDate
-        });
-    }
-
-    public void RemoveAccessTokenCookie()
-    {
-        _contextAccessor?.HttpContext?.Response.Cookies.Append("Access-Token", "", new CookieOptions
-        {
-            Secure = true,
-            HttpOnly = true,
-            SameSite = SameSiteMode.None,
-            Expires = DateTime.MinValue
-        });
-    }
-
 }
