@@ -1,28 +1,31 @@
+using DevInsightForge.Application;
 using DevInsightForge.Infrastructure;
+using DevInsightForge.WebAPI;
+using DevInsightForge.WebAPI.Extensions;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add Serilog to container
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
+
 // Add services to the container.
+builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddWebAPIServices(builder.Configuration);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+// Initialize app from builder
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+// Configure App Pipelines
+app.UseAppExceptionHandler();
+app.UseSerilogRequestLogging();
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
+// Run application
 app.Run();
