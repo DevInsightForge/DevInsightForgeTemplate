@@ -9,13 +9,11 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
 {
     private readonly Stopwatch _timer;
     private readonly ILogger<TRequest> _logger;
-    private readonly TokenServices _tokenServices;
 
-    public PerformanceBehaviour(ILogger<TRequest> logger, TokenServices tokenService)
+    public PerformanceBehaviour(ILogger<TRequest> logger)
     {
         _timer = new Stopwatch();
         _logger = logger;
-        _tokenServices = tokenService;
     }
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
@@ -31,10 +29,9 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
         if (elapsedMilliseconds > 1000)
         {
             var requestName = typeof(TRequest).Name;
-            var userId = _tokenServices.GetLoggedInUserId()?.Value;
 
-            _logger.LogInformation("DevInsightForge.API Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@Request}",
-                requestName, elapsedMilliseconds, userId, request);
+            _logger.LogInformation("DevInsightForge.API Request: {Name} ({ElapsedMilliseconds} milliseconds) {@Request}",
+                requestName, elapsedMilliseconds, request);
         }
 
         return response;

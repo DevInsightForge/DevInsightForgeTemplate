@@ -32,7 +32,7 @@ public class TokenServices
         return new UserId(parsedUserId);
     }
 
-    public string GenerateJwtToken(UserId userId)
+    public string GenerateJwtToken(UserId userId, DateTime expiryDate)
     {
         if (userId is null) throw new ArgumentNullException(nameof(userId));
 
@@ -46,7 +46,7 @@ public class TokenServices
         var securityToken = new JwtSecurityToken(
           issuer: _jwtSettings.ValidIssuer,
           audience: _jwtSettings.ValidAudience,
-          expires: DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationInMinutes),
+          expires: expiryDate,
           claims: authClaims,
           signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
         );
@@ -54,14 +54,14 @@ public class TokenServices
         return new JwtSecurityTokenHandler().WriteToken(securityToken);
     }
 
-    public void SetAccessTokenCookie(string token)
+    public void SetAccessTokenCookie(string token, DateTime expiryDate)
     {
         _contextAccessor?.HttpContext?.Response.Cookies.Append("Access-Token", token, new CookieOptions
         {
             Secure = true,
             HttpOnly = true,
             SameSite = SameSiteMode.None,
-            Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationInMinutes)
+            Expires = expiryDate
         });
     }
 
