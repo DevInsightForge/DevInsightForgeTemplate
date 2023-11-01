@@ -1,9 +1,9 @@
-﻿using DevInsightForge.Application.Services;
+﻿using DevInsightForge.Application.Common.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
-namespace DevInsightForge.Application.Behaviours;
+namespace DevInsightForge.Application.Common.Behaviours;
 
 public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {

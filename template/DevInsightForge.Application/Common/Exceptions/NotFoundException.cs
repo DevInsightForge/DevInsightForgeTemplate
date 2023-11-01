@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace DevInsightForge.Application.Exceptions;
+namespace DevInsightForge.Application.Common.Exceptions;
 
 /// <summary>
 /// Represents a custom exception for resource not found errors in the application.

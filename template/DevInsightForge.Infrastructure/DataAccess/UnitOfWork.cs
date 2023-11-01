@@ -1,4 +1,4 @@
-﻿using DevInsightForge.Application.Interfaces.DataAccess;
+﻿using DevInsightForge.Application.Common.Interfaces.DataAccess;
 using DevInsightForge.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;

@@ -1,4 +1,4 @@
-﻿namespace DevInsightForge.Application.Interfaces.DataAccess;
+﻿namespace DevInsightForge.Application.Common.Interfaces.DataAccess;
 
 public interface IUnitOfWork : IDisposable
 {

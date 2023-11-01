@@ -1,4 +1,4 @@
-﻿using DevInsightForge.Application.Exceptions;
+﻿using DevInsightForge.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;

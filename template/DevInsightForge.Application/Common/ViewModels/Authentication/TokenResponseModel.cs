@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace DevInsightForge.Application.ViewModels.Authentication;
+namespace DevInsightForge.Application.Common.ViewModels.Authentication;
 
 public class TokenResponseModel
 {

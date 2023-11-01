@@ -1,7 +1,4 @@
-﻿using DevInsightForge.Application.Behaviours;
-using DevInsightForge.Application.Configurations.Mapster;
-using DevInsightForge.Application.Configurations.Settings;
-using DevInsightForge.Domain.Entities.User;
+﻿using DevInsightForge.Domain.Entities.User;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using Mapster;
@@ -10,7 +7,10 @@ using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using DevInsightForge.Application.Services;
+using DevInsightForge.Application.Common.Behaviours;
+using DevInsightForge.Application.Common.Services;
+using DevInsightForge.Application.Common.Configurations.Mapster;
+using DevInsightForge.Application.Common.Configurations.Settings;
 
 namespace DevInsightForge.Application;
 

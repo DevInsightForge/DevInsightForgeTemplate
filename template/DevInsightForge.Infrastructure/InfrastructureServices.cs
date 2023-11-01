@@ -1,5 +1,5 @@
-﻿using DevInsightForge.Application.Interfaces.DataAccess;
-using DevInsightForge.Application.Interfaces.DataAccess.Repositories;
+﻿using DevInsightForge.Application.Common.Interfaces.DataAccess;
+using DevInsightForge.Application.Common.Interfaces.DataAccess.Repositories;
 using DevInsightForge.Infrastructure.DataAccess;
 using DevInsightForge.Infrastructure.DataAccess.Repositories;
 using DevInsightForge.Infrastructure.Persistence;

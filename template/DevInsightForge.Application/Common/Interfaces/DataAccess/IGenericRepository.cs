@@ -1,7 +1,7 @@
 ﻿using DevInsightForge.Domain.Entities.Common;
 using System.Linq.Expressions;
 
-namespace DevInsightForge.Application.Interfaces.DataAccess;
+namespace DevInsightForge.Application.Common.Interfaces.DataAccess;
 
 public interface IGenericRepository<TEntity> where TEntity : BaseEntity
 {

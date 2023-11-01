@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Runtime.Serialization;
 
-namespace DevInsightForge.Application.Exceptions;
+namespace DevInsightForge.Application.Common.Exceptions;
 
 /// <summary>
 /// Represents a custom exception for bad requests in the application.

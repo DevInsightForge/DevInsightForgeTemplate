@@ -1,4 +1,4 @@
-﻿namespace DevInsightForge.Application.ViewModels.User;
+﻿namespace DevInsightForge.Application.Common.ViewModels.User;
 
 public class UserResponseModel
 {

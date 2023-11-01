@@ -1,5 +1,5 @@
-﻿using DevInsightForge.Application.Configurations.Settings;
-using DevInsightForge.Application.Exceptions;
+﻿using DevInsightForge.Application.Common.Configurations.Settings;
+using DevInsightForge.Application.Common.Exceptions;
 using DevInsightForge.Domain.Entities.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace DevInsightForge.Application.Services;
+namespace DevInsightForge.Application.Common.Services;
 
 public class TokenServices
 {
