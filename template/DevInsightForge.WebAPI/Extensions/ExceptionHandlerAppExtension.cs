@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using DevInsightForge.Application.Exceptions;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -21,17 +22,17 @@ public static class ExceptionHandlerAppExtension
 
                 switch (contextFeature?.Error)
                 {
-                    //case BadRequestException exception:
-                    //    problemDetails.Status = StatusCodes.Status400BadRequest;
-                    //    problemDetails.Title = "Bad Request";
-                    //    problemDetails.Detail = exception.Message.ToString();
-                    //    break;
+                    case BadRequestException exception:
+                        problemDetails.Status = StatusCodes.Status400BadRequest;
+                        problemDetails.Title = "Bad Request";
+                        problemDetails.Detail = exception.Message.ToString();
+                        break;
 
-                    //case NotFoundException exception:
-                    //    problemDetails.Status = StatusCodes.Status404NotFound;
-                    //    problemDetails.Title = "Not Found";
-                    //    problemDetails.Detail = exception.Message.ToString();
-                    //    break;
+                    case NotFoundException exception:
+                        problemDetails.Status = StatusCodes.Status404NotFound;
+                        problemDetails.Title = "Not Found";
+                        problemDetails.Detail = exception.Message.ToString();
+                        break;
 
                     case FluentValidation.ValidationException exception:
                         problemDetails.Status = StatusCodes.Status400BadRequest;
