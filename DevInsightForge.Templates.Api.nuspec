@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>DevInsightForge.Templates.Api</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Mofajjal Rasul</authors>
     <owners>DevInsightForge</owners>
     <description>Template for a DevInsightForge Web API project.</description>

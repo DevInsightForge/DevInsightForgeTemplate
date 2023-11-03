@@ -3,7 +3,7 @@ name: Build and publish NuGet package to organization
 on:
   push:
     branches:
-      - main
+      - production
 
 jobs:
   build-and-publish:
