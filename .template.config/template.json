@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Mofajjal Rasul",
+  "classifications": ["Api"],
+  "name": "DevInsightForge Web API Template",
+  "identity": "DevInsightForge.Templates.Api",
+  "shortName": "devforgeapi",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "DevInsightForge",
+  "preferNameDirectory": true,
+  "description": "Template for a DevInsightForge Web API project.",
+  "version": "1.0.0",
+  "copyright": "Copyright 2023 DevInsightForge",
+  "license": {
+    "type": "MIT",
+    "url": "https://opensource.org/licenses/MIT"
+  },
+  "releaseNotes": "Initial release",
+  "repository": {
+    "url": "https://github.com/DevInsightForge/DevInsightForgeTemplate",
+    "type": "git",
+    "branch": "main"
+  },
+  "templateData": [
+    {
+      "name": "DevInsightForge",
+      "description": "DevInsightForge: Debugging Dungeon"
+    }
+  ],
+  "templateTags": [
+    {
+      "name": "dotnet",
+      "tags": ["api", "web", "c#"]
+    }
+  ]
+}
