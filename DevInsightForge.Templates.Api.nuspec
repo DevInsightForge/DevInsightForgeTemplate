@@ -5,19 +5,26 @@
     <version>1.0.0</version>
     <authors>Mofajjal Rasul</authors>
     <owners>DevInsightForge</owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="expression">MIT</license>
     <description>Template for a DevInsightForge Web API project.</description>
-    <releaseNotes>Initial release</releaseNotes>
-    <copyright>Copyright 2023 DevInsightForge</copyright>
     <tags>Api C# project</tags>
     <readme>README.md</readme>
-    <dependencies>
-      <group targetFramework="net7.0">
-      </group>
-    </dependencies>
+    <copyright>Copyright 2023 DevInsightForge</copyright>
+
+    <license type="expression">MIT</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    
+    <releaseNotes>Initial release</releaseNotes>
+    
+    <projectUrl>https://github.com/DevInsightForge/DevInsightForgeTemplate</projectUrl>
+    <repository type="git" url="https://github.com/DevInsightForge/DevInsightForgeTemplate.git" branch="main" />
+
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+
   </metadata>
   <files>
+    <file src=".template.config\**\*.*" target="template\.template.config" />
     <file src="template\**" target="template" exclude="**\.vs\**;**\*.dll;**\*.designer.cs;**\*.csproj;**\*.pdb;**\*.user;**\*.vspscc;**\bin\**;**\obj\**;**\*.sqlite" />
     <file src="README.md" />
   </files>
