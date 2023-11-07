@@ -25,7 +25,7 @@
   </metadata>
   <files>
     <file src=".template.config\**\*.*" target="template\.template.config" />
-    <file src="template\**" target="template" exclude="**\.vs\**;**\*.dll;**\*.designer.cs;**\*.csproj;**\*.pdb;**\*.user;**\*.vspscc;**\bin\**;**\obj\**;**\*.sqlite" />
+    <file src="template\**" target="template" exclude="**\.vs\**;**\*.dll;**\*.designer.cs;**\*.pdb;**\*.user;**\*.vspscc;**\bin\**;**\obj\**;**\*.sqlite" />
     <file src="README.md" />
   </files>
 </package>
