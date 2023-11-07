@@ -2,7 +2,6 @@
 <package>
   <metadata>
     <id>DevInsightForge.Templates.Api</id>
-    <version>1.0.2</version>
     <authors>Mofajjal Rasul</authors>
     <owners>DevInsightForge</owners>
     <description>Template for a DevInsightForge Web API project.</description>
@@ -13,7 +12,8 @@
     <license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     
-    <releaseNotes>Initial release</releaseNotes>
+    <version>1.0.3</version>
+    <releaseNotes>Template ready to create</releaseNotes>
     
     <projectUrl>https://github.com/DevInsightForge/DevInsightForgeTemplate</projectUrl>
     <repository type="git" url="https://github.com/DevInsightForge/DevInsightForgeTemplate.git" branch="main" />
