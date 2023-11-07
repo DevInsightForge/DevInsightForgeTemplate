@@ -1,9 +1,14 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Mofajjal Rasul",
-  "classifications": ["Api"],
+  "classifications": [
+    "Api"
+  ],
   "name": "DevInsightForge Web API Template",
   "identity": "DevInsightForge.Templates.Api",
+  "description": "Template for a DevInsightForge Web API project.",
+  "copyright": "Copyright 2023 DevInsightForge",
+  "version": "1.0.0",
   "shortName": "devforgeapi",
   "tags": {
     "language": "C#",
@@ -11,9 +16,13 @@
   },
   "sourceName": "DevInsightForge",
   "preferNameDirectory": true,
-  "description": "Template for a DevInsightForge Web API project.",
-  "version": "1.0.0",
-  "copyright": "Copyright 2023 DevInsightForge",
+  "guids": [
+    "2B9E919F-D63B-4243-9680-3D645EC87ABF",
+    "222CA023-1A21-4B91-A6D2-A22807A30D39",
+    "7FDF99C7-FC2B-40A2-91BF-D95B2740F9FD",
+    "303B8158-2B31-45D9-8F6B-CC11BC872FE5",
+    "A6C32FD0-C25C-4EB7-AB08-571618DB7D5E"
+  ],
   "license": {
     "type": "MIT",
     "url": "https://opensource.org/licenses/MIT"
@@ -33,7 +42,11 @@
   "templateTags": [
     {
       "name": "dotnet",
-      "tags": ["api", "web", "c#"]
+      "tags": [
+        "api",
+        "web",
+        "c#"
+      ]
     }
   ]
 }
