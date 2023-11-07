@@ -16,13 +16,7 @@ public static class SwaggerServiceExtension
             {
                 Title = "DevInsightForge.API",
                 Version = "v1",
-                Description = "The DevInsightForge.API built with ASP.NET Core, it ensures secure and efficient communication through JSON Web Tokens (JWT) for authentication.",
-                Contact = new OpenApiContact
-                {
-                    Name = "ZèD",
-                    Email = "imzihad@gmail.com",
-                    Url = new Uri("https://imzihad21.github.io")
-                }
+                Description = "The DevInsightForge API built with ASP.NET Core, it ensures secure and efficient communication through JSON Web Tokens (JWT) for authentication."
             });
             // Include 'SecurityScheme' to use JWT Authentication
             var jwtSecurityScheme = new OpenApiSecurityScheme
