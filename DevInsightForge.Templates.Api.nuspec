@@ -15,8 +15,8 @@
     <version>1.0.3</version>
     <releaseNotes>Template ready to create</releaseNotes>
     
-    <projectUrl>https://github.com/DevInsightForge/DevInsightForgeTemplate</projectUrl>
-    <repository type="git" url="https://github.com/DevInsightForge/DevInsightForgeTemplate.git" branch="main" />
+    <projectUrl>https://github.com/DevInsightForge/DotNetDevForgeTemplate</projectUrl>
+    <repository type="git" url="https://github.com/DevInsightForge/DotNetDevForgeTemplate.git" branch="main" />
 
     <packageTypes>
       <packageType name="Template" />
