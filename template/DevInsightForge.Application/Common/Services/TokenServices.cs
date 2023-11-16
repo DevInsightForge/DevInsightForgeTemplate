@@ -11,7 +11,7 @@ using System.Text;
 
 namespace DevInsightForge.Application.Common.Services;
 
-public class TokenServices
+public class TokenServices(IOptions<JwtSettings> jwtSettings, IHttpContextAccessor contextAccessor)
 {
     // Custom Claims
     private const string UserIdClaim = ClaimTypes.NameIdentifier;
@@ -19,14 +19,8 @@ public class TokenServices
     private const string DateJoinedClaim = "dj";
     private const string LastLoginClaim = "ll";
 
-    private readonly IHttpContextAccessor _contextAccessor;
-    private readonly JwtSettings _jwtSettings;
-
-    public TokenServices(IOptions<JwtSettings> jwtSettings, IHttpContextAccessor contextAccessor)
-    {
-        _contextAccessor = contextAccessor ?? throw new ArgumentNullException(nameof(contextAccessor));
-        _jwtSettings = jwtSettings.Value;
-    }
+    private readonly IHttpContextAccessor _contextAccessor = contextAccessor ?? throw new ArgumentNullException(nameof(contextAccessor));
+    private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 
     public UserId GetLoggedInUserId()
     {
@@ -59,15 +53,15 @@ public class TokenServices
 
     public string GenerateJwtToken(UserModel user, DateTime? expiryDate)
     {
-        if (user is null) throw new ArgumentNullException(nameof(user));
+        ArgumentNullException.ThrowIfNull(user);
         expiryDate ??= DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationInMinutes);
 
         var authClaims = new List<Claim>
         {
-            new Claim(UserIdClaim, user.Id.ToString(), ClaimValueTypes.Sid),
-            new Claim(EmailClaim, user.Email, ClaimValueTypes.Email),
-            new Claim(DateJoinedClaim, user.DateJoined.ToString(), ClaimValueTypes.DateTime),
-            new Claim(LastLoginClaim, user.LastLogin.ToString(), ClaimValueTypes.DateTime),
+            new(UserIdClaim, user.Id.ToString(), ClaimValueTypes.Sid),
+            new(EmailClaim, user.Email, ClaimValueTypes.Email),
+            new(DateJoinedClaim, user.DateJoined.ToString(), ClaimValueTypes.DateTime),
+            new(LastLoginClaim, user.LastLogin.ToString(), ClaimValueTypes.DateTime),
         };
 
         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));

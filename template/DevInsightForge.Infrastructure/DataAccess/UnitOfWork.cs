@@ -5,21 +5,13 @@ using Microsoft.Extensions.Logging;
 
 namespace DevInsightForge.Infrastructure.DataAccess;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork(DatabaseContext databaseContext, ILogger<UnitOfWork> logger) : IUnitOfWork
 {
-    private readonly DatabaseContext _dbContext;
     private IDbContextTransaction? _currentTransaction;
-    private readonly ILogger<UnitOfWork> _logger;
-
-    public UnitOfWork(DatabaseContext databaseContext, ILogger<UnitOfWork> logger)
-    {
-        _dbContext = databaseContext;
-        _logger = logger;
-    }
 
     public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
-        _currentTransaction ??= await _dbContext.Database.BeginTransactionAsync(cancellationToken);
+        _currentTransaction ??= await databaseContext.Database.BeginTransactionAsync(cancellationToken);
     }
 
     public async Task CommitTransactionAsync(CancellationToken cancellationToken = default)
@@ -33,7 +25,7 @@ public class UnitOfWork : IUnitOfWork
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error committing the transaction.");
+            logger.LogError(ex, "Error committing the transaction.");
             await RollbackTransactionAsync(cancellationToken);
             throw;
         }
@@ -57,7 +49,7 @@ public class UnitOfWork : IUnitOfWork
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error rolling back the transaction.");
+                logger.LogError(ex, "Error rolling back the transaction.");
             }
             finally
             {
@@ -69,7 +61,7 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return await _dbContext.SaveChangesAsync(cancellationToken);
+        return await databaseContext.SaveChangesAsync(cancellationToken);
     }
 
     public void Dispose()
@@ -83,7 +75,7 @@ public class UnitOfWork : IUnitOfWork
         if (disposing)
         {
             _currentTransaction?.Dispose();
-            _dbContext.Dispose();
+            databaseContext.Dispose();
         }
     }
 }

@@ -7,15 +7,10 @@ namespace DevInsightForge.Infrastructure.Persistence.Converters;
 /// <summary>
 /// Based on https://andrewlock.net/strongly-typed-ids-in-ef-core-using-strongly-typed-entity-ids-to-avoid-primitive-obsession-part-4/
 /// </summary>
-internal sealed class CustomValueConverterSelector : ValueConverterSelector
+internal sealed class CustomValueConverterSelector(ValueConverterSelectorDependencies dependencies) : ValueConverterSelector(dependencies)
 {
     private readonly ConcurrentDictionary<(Type ModelClrType, Type ProviderClrType), ValueConverterInfo> _converters
         = new();
-
-    public CustomValueConverterSelector(ValueConverterSelectorDependencies dependencies)
-        : base(dependencies)
-    {
-    }
 
     public override IEnumerable<ValueConverterInfo> Select(Type modelClrType, Type? providerClrType = null)
     {

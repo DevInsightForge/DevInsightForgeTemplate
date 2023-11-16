@@ -5,17 +5,10 @@ namespace DevInsightForge.Application.Authentication.Queries.GetTokenUser;
 
 public sealed record GetTokenUserQuery : IRequest<UserResponseModel>;
 
-internal sealed class GetTokenUserQueryHandler : IRequestHandler<GetTokenUserQuery, UserResponseModel>
+internal sealed class GetTokenUserQueryHandler(TokenServices tokenServices) : IRequestHandler<GetTokenUserQuery, UserResponseModel>
 {
-    private readonly TokenServices _tokenServices;
-
-    public GetTokenUserQueryHandler(TokenServices tokenServices)
-    {
-        _tokenServices = tokenServices;
-    }
-
     public Task<UserResponseModel> Handle(GetTokenUserQuery request, CancellationToken cancellationToken)
     {
-        return Task.FromResult(_tokenServices.GetLoggedInUser());
+        return Task.FromResult(tokenServices.GetLoggedInUser());
     }
 }

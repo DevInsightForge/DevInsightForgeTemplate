@@ -12,7 +12,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
     public GenericRepository(DatabaseContext dbContext)
     {
-        if (dbContext is null) throw new ArgumentNullException(nameof(dbContext));
+        ArgumentNullException.ThrowIfNull(dbContext);
         _dbSet = dbContext.Set<TEntity>();
     }
 

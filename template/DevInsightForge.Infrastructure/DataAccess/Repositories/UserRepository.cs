@@ -4,9 +4,6 @@ using DevInsightForge.Infrastructure.Persistence;
 
 namespace DevInsightForge.Infrastructure.DataAccess.Repositories;
 
-public class UserRepository : GenericRepository<UserModel>, IUserRepository
+public class UserRepository(DatabaseContext dbContext) : GenericRepository<UserModel>(dbContext), IUserRepository
 {
-    public UserRepository(DatabaseContext dbContext) : base(dbContext)
-    {
-    }
 }

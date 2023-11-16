@@ -10,29 +10,25 @@ namespace DevInsightForge.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController(ISender sender) : ControllerBase
 {
-
-    private readonly ISender _sender;
-    public AuthenticationController(ISender sender) => _sender = sender;
-
     [HttpGet(nameof(GetTokenUser))]
     public async Task<UserResponseModel> GetTokenUser()
     {
-        return await _sender.Send(new GetTokenUserQuery());
+        return await sender.Send(new GetTokenUserQuery());
     }
 
     [AllowAnonymous]
     [HttpPost(nameof(Register))]
     public async Task<TokenResponseModel> Register(RegisterUserCommand command)
     {
-        return await _sender.Send(command);
+        return await sender.Send(command);
     }
 
     [AllowAnonymous]
     [HttpPost(nameof(Authenticate))]
     public async Task<TokenResponseModel> Authenticate(AuthenticateUserCommand command)
     {
-        return await _sender.Send(command);
+        return await sender.Send(command);
     }
 }

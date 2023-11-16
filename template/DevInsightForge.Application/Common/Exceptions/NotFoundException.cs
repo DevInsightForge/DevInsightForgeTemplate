@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace DevInsightForge.Application.Common.Exceptions;
+﻿namespace DevInsightForge.Application.Common.Exceptions;
 
 /// <summary>
 /// Represents a custom exception for resource not found errors in the application.
@@ -14,7 +12,4 @@ public class NotFoundException : Exception
 
     public NotFoundException(string message, Exception innerException)
         : base(message, innerException) { }
-
-    protected NotFoundException(SerializationInfo info, StreamingContext context)
-        : base(info, context) { }
 }
