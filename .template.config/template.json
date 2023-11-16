@@ -25,7 +25,7 @@
     "type": "MIT",
     "url": "https://opensource.org/licenses/MIT"
   },
-  "releaseNotes": "Initial release",
+  "releaseNotes": "Migrate to .net8.0",
   "repository": {
     "url": "https://github.com/DevInsightForge/DotNetDevForgeTemplate",
     "type": "git",
