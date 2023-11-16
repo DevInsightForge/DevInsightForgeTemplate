@@ -18,7 +18,7 @@ public static class InfrastructureServices
         // Configure DbContext provider
         services.AddDbContext<DatabaseContext>(options =>
         {
-            options.UseSqlite(configuration.GetConnectionString("SqliteDatabase"));
+            options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
             options.ReplaceService<IValueConverterSelector, CustomValueConverterSelector>();
         });
 

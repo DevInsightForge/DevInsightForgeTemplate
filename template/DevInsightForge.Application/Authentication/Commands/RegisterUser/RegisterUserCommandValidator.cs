@@ -1,5 +1,6 @@
-﻿using DevInsightForge.Application.Authentication.Commands.RegisterUser;
-using DevInsightForge.Application.Common.Interfaces.DataAccess.Repositories;
+﻿using DevInsightForge.Application.Common.Interfaces.DataAccess.Repositories;
+
+namespace DevInsightForge.Application.Authentication.Commands.RegisterUser;
 
 public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
 {

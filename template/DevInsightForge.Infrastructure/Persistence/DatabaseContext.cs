@@ -3,11 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DevInsightForge.Infrastructure.Persistence;
 
-public class DatabaseContext : DbContext
+public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbContext(options)
 {
     public DbSet<UserModel> Users { get; set; }
-
-    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -37,7 +37,7 @@ public static class AuthenticationServiceExtension
         });
 
         // Enforce authentication globally
-        services.AddAuthorization(options => options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        _ = services.AddAuthorization(options => options.FallbackPolicy = new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .Build());
 

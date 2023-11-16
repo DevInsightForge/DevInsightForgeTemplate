@@ -3,14 +3,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DevInsightForge.Infrastructure.Persistence.Converters;
 
-internal sealed class TypedIdToBytesConverter<TTypedIdValue> : ValueConverter<TTypedIdValue, byte[]>
+internal sealed class TypedIdToBytesConverter<TTypedIdValue>(ConverterMappingHints? mappingHints = null) : ValueConverter<TTypedIdValue, byte[]>(id => id.Value.ToByteArray(), value => Create(value), mappingHints)
         where TTypedIdValue : BaseTypedId
 {
-    public TypedIdToBytesConverter(ConverterMappingHints? mappingHints = null)
-        : base(id => id.Value.ToByteArray(), value => Create(value), mappingHints)
-    {
-    }
-
     private static TTypedIdValue Create(byte[] id)
     {
         TTypedIdValue instance = Activator.CreateInstance(typeof(TTypedIdValue), new Ulid(id)) as TTypedIdValue ??

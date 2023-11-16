@@ -1,8 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Runtime.Serialization;
-
-namespace DevInsightForge.Application.Common.Exceptions;
+﻿namespace DevInsightForge.Application.Common.Exceptions;
 
 /// <summary>
 /// Represents a custom exception for bad requests in the application.
@@ -16,8 +12,5 @@ public class BadRequestException : Exception
 
     public BadRequestException(string message, Exception innerException)
         : base(message, innerException) { }
-
-    protected BadRequestException(SerializationInfo info, StreamingContext context)
-        : base(info, context) { }
 }
 

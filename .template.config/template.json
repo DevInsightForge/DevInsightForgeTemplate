@@ -1,9 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Mofajjal Rasul",
-  "classifications": [
-    "Api"
-  ],
+  "classifications": ["Api"],
   "name": "DevInsightForge Web API Template",
   "identity": "DevInsightForge.Templates.Api",
   "description": "Template for a DevInsightForge Web API project.",
@@ -27,9 +25,9 @@
     "type": "MIT",
     "url": "https://opensource.org/licenses/MIT"
   },
-  "releaseNotes": "Initial release",
+  "releaseNotes": "Migrate to .net8.0",
   "repository": {
-    "url": "https://github.com/DevInsightForge/DevInsightForgeTemplate",
+    "url": "https://github.com/DevInsightForge/DotNetDevForgeTemplate",
     "type": "git",
     "branch": "main"
   },
@@ -42,11 +40,7 @@
   "templateTags": [
     {
       "name": "dotnet",
-      "tags": [
-        "api",
-        "web",
-        "c#"
-      ]
+      "tags": ["api", "web", "c#"]
     }
   ]
 }

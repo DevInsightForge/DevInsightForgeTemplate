@@ -1,6 +1,6 @@
 ﻿using DevInsightForge.Domain.Entities.User;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DevInsightForge.Infrastructure.Persistence.Configurations;
 
