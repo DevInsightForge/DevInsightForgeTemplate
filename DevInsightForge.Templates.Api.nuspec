@@ -12,8 +12,8 @@
     <license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     
-    <version>1.0.4</version>
-    <releaseNotes>Migrate to DotNet 8.0</releaseNotes>
+    <version>2.0.0</version>
+    <releaseNotes>Instructions added and major version upgrade</releaseNotes>
     
     <projectUrl>https://github.com/DevInsightForge/DotNetDevForgeTemplate</projectUrl>
     <repository type="git" url="https://github.com/DevInsightForge/DotNetDevForgeTemplate.git" branch="main" />
