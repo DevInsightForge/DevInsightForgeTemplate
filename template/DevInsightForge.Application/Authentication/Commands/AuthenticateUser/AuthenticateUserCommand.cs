@@ -32,7 +32,7 @@ internal sealed class AuthenticateUserCommandHandler(
 
     public async Task<TokenResponseModel> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
     {
-        UserModel? user = await userRepository.GetWhereAsync(u => u.NormalizedEmail.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase));
+        UserModel? user = await userRepository.GetWhereAsync(u => u.NormalizedEmail.Equals(request.Email));
 
         if (user is null || passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password) != PasswordVerificationResult.Success)
         {

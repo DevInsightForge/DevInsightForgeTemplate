@@ -15,7 +15,7 @@ public class TokenServices(IOptions<JwtSettings> jwtSettings, IHttpContextAccess
 {
     // Custom Claims
     private const string UserIdClaim = ClaimTypes.NameIdentifier;
-    private const string EmailClaim = "email";
+    private const string EmailClaim = ClaimTypes.Email;
     private const string DateJoinedClaim = "dj";
     private const string LastLoginClaim = "ll";
 
