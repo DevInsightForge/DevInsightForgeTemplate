@@ -19,15 +19,15 @@ public class AuthenticationController(ISender sender) : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpPost(nameof(Register))]
-    public async Task<TokenResponseModel> Register(RegisterUserCommand command)
+    [HttpPost(nameof(RegisterUser))]
+    public async Task<TokenResponseModel> RegisterUser(RegisterUserCommand command)
     {
         return await sender.Send(command);
     }
 
     [AllowAnonymous]
-    [HttpPost(nameof(Authenticate))]
-    public async Task<TokenResponseModel> Authenticate(AuthenticateUserCommand command)
+    [HttpPost(nameof(AuthenticateUser))]
+    public async Task<TokenResponseModel> AuthenticateUser(AuthenticateUserCommand command)
     {
         return await sender.Send(command);
     }
