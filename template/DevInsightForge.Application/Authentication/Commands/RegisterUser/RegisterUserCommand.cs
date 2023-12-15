@@ -3,7 +3,7 @@ using DevInsightForge.Application.Common.Interfaces.DataAccess;
 using DevInsightForge.Application.Common.Interfaces.DataAccess.Repositories;
 using DevInsightForge.Application.Common.Services;
 using DevInsightForge.Application.Common.ViewModels.Authentication;
-using DevInsightForge.Domain.Entities.User;
+using DevInsightForge.Domain.Entities.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.ComponentModel;

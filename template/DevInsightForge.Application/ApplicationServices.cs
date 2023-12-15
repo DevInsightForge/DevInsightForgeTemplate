@@ -2,7 +2,7 @@
 using DevInsightForge.Application.Common.Configurations.Mapster;
 using DevInsightForge.Application.Common.Configurations.Settings;
 using DevInsightForge.Application.Common.Services;
-using DevInsightForge.Domain.Entities.User;
+using DevInsightForge.Domain.Entities.Core;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;

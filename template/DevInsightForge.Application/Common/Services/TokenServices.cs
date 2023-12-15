@@ -1,7 +1,7 @@
 ﻿using DevInsightForge.Application.Common.Configurations.Settings;
 using DevInsightForge.Application.Common.Exceptions;
 using DevInsightForge.Application.Common.ViewModels.User;
-using DevInsightForge.Domain.Entities.User;
+using DevInsightForge.Domain.Entities.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -22,22 +22,23 @@ public class TokenServices(IOptions<JwtSettings> jwtSettings, IHttpContextAccess
     private readonly IHttpContextAccessor _contextAccessor = contextAccessor ?? throw new ArgumentNullException(nameof(contextAccessor));
     private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 
-    public UserId GetLoggedInUserId()
+    public long GetLoggedInUserId()
     {
         var userIdClaim = (_contextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)) ?? throw new BadRequestException("User ID claim not found!");
-        if (!Ulid.TryParse(userIdClaim.Value?.Trim(), out var parsedUserId)) throw new BadRequestException("User ID claim is not valid!");
+        if (!long.TryParse(userIdClaim.Value?.Trim(), out var parsedUserId)) throw new BadRequestException("User ID claim is not valid!");
 
-        return new UserId(parsedUserId);
+        return parsedUserId;
     }
 
     public UserResponseModel GetLoggedInUser()
     {
         ClaimsPrincipal principal = _contextAccessor?.HttpContext?.User ?? throw new BadRequestException("User claims are not found!");
-        string userId = principal.FindFirstValue(UserIdClaim) ?? throw new BadRequestException("User ID claim not found!");
+        string userTokenId = principal.FindFirstValue(UserIdClaim) ?? throw new BadRequestException("User ID claim not found!");
         string userEmail = principal.FindFirstValue(EmailClaim) ?? throw new BadRequestException("User Email claim not found!");
         string userDateJoined = principal.FindFirstValue(DateJoinedClaim) ?? throw new BadRequestException("User DateJoined claim not found!");
         string userLastLogin = principal.FindFirstValue(LastLoginClaim) ?? throw new BadRequestException("User LastLogin claim not found!");
 
+        long userId = long.TryParse(userTokenId, out var parsedUserId) ? parsedUserId : throw new BadRequestException("User ID claim is not valid!");
         DateTime dateJoined = DateTime.TryParse(userDateJoined, out var dj) ? dj : throw new BadRequestException("User DateJoined claim is not a valid DateTime");
         DateTime lastLogin = DateTime.TryParse(userLastLogin, out var ll) ? ll : throw new BadRequestException("User LastLogin claim is not a valid DateTime");
 

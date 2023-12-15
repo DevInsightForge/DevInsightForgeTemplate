@@ -1,16 +1,17 @@
-﻿using DevInsightForge.Domain.Entities.User;
+﻿using DevInsightForge.Domain.Entities.Core;
+using DevInsightForge.Infrastructure.Persistence.Configurations.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DevInsightForge.Infrastructure.Persistence.Configurations;
 
-public class UserModelConfiguration : IEntityTypeConfiguration<UserModel>
+internal class UserModelConfiguration : BaseEntityConfiguration<UserModel>
 {
-    public void Configure(EntityTypeBuilder<UserModel> builder)
+    public override void Configure(EntityTypeBuilder<UserModel> builder)
     {
-        builder.ToTable("Users");
+        base.Configure(builder);
 
-        builder.HasKey(x => x.Id);
+        builder.ToTable("Users");
 
         builder.Property(u => u.Email)
             .IsRequired()

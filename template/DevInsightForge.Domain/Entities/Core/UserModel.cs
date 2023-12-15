@@ -1,10 +1,9 @@
 ﻿using DevInsightForge.Domain.Entities.Common;
 
-namespace DevInsightForge.Domain.Entities.User;
+namespace DevInsightForge.Domain.Entities.Core;
 
 public class UserModel : BaseEntity
 {
-    public UserId Id { get; private set; } = new();
     public string Email { get; private set; } = string.Empty;
     public string NormalizedEmail { get; private set; } = string.Empty;
     public string PasswordHash { get; private set; } = string.Empty;

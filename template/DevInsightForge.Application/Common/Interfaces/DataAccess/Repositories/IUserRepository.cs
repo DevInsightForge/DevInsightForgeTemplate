@@ -1,4 +1,4 @@
-﻿using DevInsightForge.Domain.Entities.User;
+﻿using DevInsightForge.Domain.Entities.Core;
 
 namespace DevInsightForge.Application.Common.Interfaces.DataAccess.Repositories;
 
