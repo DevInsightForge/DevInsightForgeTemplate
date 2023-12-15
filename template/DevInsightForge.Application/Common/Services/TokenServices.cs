@@ -1,6 +1,5 @@
 ﻿using DevInsightForge.Application.Common.Configurations.Settings;
 using DevInsightForge.Application.Common.Exceptions;
-using DevInsightForge.Domain.Entities.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -13,27 +12,27 @@ namespace DevInsightForge.Application.Common.Services;
 public class TokenServices(IOptions<JwtSettings> jwtSettings, IHttpContextAccessor contextAccessor)
 {
     // Custom Claims
-    private const string UserIdClaim = ClaimTypes.NameIdentifier;
 
     private readonly IHttpContextAccessor _contextAccessor = contextAccessor ?? throw new ArgumentNullException(nameof(contextAccessor));
     private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 
     public Guid GetLoggedInUserId()
     {
-        var userIdClaim = (_contextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)) ?? throw new BadRequestException("User ID claim not found!");
+        var userIdClaim = (_contextAccessor?.HttpContext?.User?.FindFirst(JwtRegisteredClaimNames.Sid)) ?? throw new BadRequestException("User ID claim not found!");
         if (!Guid.TryParse(userIdClaim.Value?.Trim(), out var parsedUserId)) throw new BadRequestException("User ID claim is not valid!");
 
         return parsedUserId;
     }
 
-    public string GenerateJwtToken(UserModel user, DateTime? expiryDate)
+    public string GenerateJwtToken(Guid userId, DateTime? expiryDate)
     {
-        ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(userId, nameof(userId));
         expiryDate ??= DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationInMinutes);
 
         var authClaims = new List<Claim>
         {
-            new(UserIdClaim, user.Id.ToString(), ClaimValueTypes.Sid),
+            new(JwtRegisteredClaimNames.Sid, userId.ToString(), ClaimValueTypes.Sid),
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
 
         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
