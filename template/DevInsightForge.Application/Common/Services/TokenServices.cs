@@ -1,7 +1,7 @@
 ﻿using DevInsightForge.Application.Common.Configurations.Settings;
 using DevInsightForge.Application.Common.Exceptions;
 using DevInsightForge.Application.Common.ViewModels.User;
-using DevInsightForge.Domain.Entities.User;
+using DevInsightForge.Domain.Entities.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

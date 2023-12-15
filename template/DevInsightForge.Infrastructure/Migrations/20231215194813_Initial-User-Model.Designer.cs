@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevInsightForge.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231215192549_Initial-User-Model")]
+    [Migration("20231215194813_Initial-User-Model")]
     partial class InitialUserModel
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace DevInsightForge.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DevInsightForge.Domain.Entities.User.UserModel", b =>
+            modelBuilder.Entity("DevInsightForge.Domain.Entities.Core.UserModel", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()

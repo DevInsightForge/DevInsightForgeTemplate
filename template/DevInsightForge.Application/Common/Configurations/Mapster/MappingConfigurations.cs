@@ -1,5 +1,5 @@
 ﻿using DevInsightForge.Application.Common.ViewModels.User;
-using DevInsightForge.Domain.Entities.User;
+using DevInsightForge.Domain.Entities.Core;
 
 namespace DevInsightForge.Application.Common.Configurations.Mapster;
 

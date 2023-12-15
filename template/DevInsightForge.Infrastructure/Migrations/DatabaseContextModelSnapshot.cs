@@ -22,7 +22,7 @@ namespace DevInsightForge.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DevInsightForge.Domain.Entities.User.UserModel", b =>
+            modelBuilder.Entity("DevInsightForge.Domain.Entities.Core.UserModel", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()

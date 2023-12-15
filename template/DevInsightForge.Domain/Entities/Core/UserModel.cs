@@ -1,6 +1,6 @@
 ﻿using DevInsightForge.Domain.Entities.Common;
 
-namespace DevInsightForge.Domain.Entities.User;
+namespace DevInsightForge.Domain.Entities.Core;
 
 public class UserModel : BaseEntity
 {

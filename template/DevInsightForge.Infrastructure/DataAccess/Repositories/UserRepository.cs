@@ -1,5 +1,5 @@
 ﻿using DevInsightForge.Application.Common.Interfaces.DataAccess.Repositories;
-using DevInsightForge.Domain.Entities.User;
+using DevInsightForge.Domain.Entities.Core;
 using DevInsightForge.Infrastructure.Persistence;
 
 namespace DevInsightForge.Infrastructure.DataAccess.Repositories;

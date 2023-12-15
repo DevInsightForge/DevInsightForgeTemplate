@@ -1,13 +1,14 @@
-﻿using DevInsightForge.Domain.Entities.User;
+﻿using DevInsightForge.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DevInsightForge.Infrastructure.Persistence.Configurations.Common;
 
-internal class BaseEntityConfiguration : IEntityTypeConfiguration<UserModel>
+public abstract class BaseEntityConfiguration<TBase> : IEntityTypeConfiguration<TBase>
+    where TBase : BaseEntity
 {
-    public void Configure(EntityTypeBuilder<UserModel> builder)
+    public virtual void Configure(EntityTypeBuilder<TBase> builder)
     {
-        builder.HasKey(x => x.Id);
+        builder.HasKey(t => t.Id);
     }
 }
