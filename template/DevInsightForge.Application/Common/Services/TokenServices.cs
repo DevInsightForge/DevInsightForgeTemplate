@@ -1,7 +1,5 @@
 ﻿using DevInsightForge.Application.Common.Configurations.Settings;
 using DevInsightForge.Application.Common.Exceptions;
-using DevInsightForge.Application.Common.ViewModels.Authentication;
-using DevInsightForge.Application.Common.ViewModels.User;
 using DevInsightForge.Domain.Entities.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -20,35 +18,13 @@ public class TokenServices(IOptions<JwtSettings> jwtSettings, IHttpContextAccess
     private readonly IHttpContextAccessor _contextAccessor = contextAccessor ?? throw new ArgumentNullException(nameof(contextAccessor));
     private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 
-    public long GetLoggedInUserId()
+    public Guid GetLoggedInUserId()
     {
         var userIdClaim = (_contextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)) ?? throw new BadRequestException("User ID claim not found!");
-        if (!long.TryParse(userIdClaim.Value?.Trim(), out var parsedUserId)) throw new BadRequestException("User ID claim is not valid!");
+        if (!Guid.TryParse(userIdClaim.Value?.Trim(), out var parsedUserId)) throw new BadRequestException("User ID claim is not valid!");
 
         return parsedUserId;
     }
-
-    public TokenUserModel GetLoggedInUser()
-    {
-        var principal = _contextAccessor?.HttpContext?.User
-            ?? throw new BadRequestException("User claims are not found!");
-
-        var userId = Guid.TryParse(principal.FindFirstValue(UserIdClaim), out var parsedUserId)
-            ? parsedUserId
-            : throw new BadRequestException("User ID claim is not valid!");
-
-        var expiryDateTimeUtc = principal.FindFirstValue("exp") != null &&
-                                long.TryParse(principal.FindFirstValue("exp"), out var expiryUnixTime)
-            ? DateTimeOffset.FromUnixTimeSeconds(expiryUnixTime).UtcDateTime
-            : throw new BadRequestException("Expiration claim not found or invalid!");
-
-        return new TokenUserModel
-        {
-            UserId = userId.ToString(),
-            ExpiryDate = expiryDateTimeUtc
-        };
-    }
-
 
     public string GenerateJwtToken(UserModel user, DateTime? expiryDate)
     {
