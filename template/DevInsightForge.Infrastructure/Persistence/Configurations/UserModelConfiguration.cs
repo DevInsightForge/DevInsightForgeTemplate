@@ -4,13 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DevInsightForge.Infrastructure.Persistence.Configurations;
 
-public class UserModelConfiguration : IEntityTypeConfiguration<UserModel>
+internal class UserModelConfiguration : IEntityTypeConfiguration<UserModel>
 {
     public void Configure(EntityTypeBuilder<UserModel> builder)
     {
         builder.ToTable("Users");
-
-        builder.HasKey(x => x.Id);
 
         builder.Property(u => u.Email)
             .IsRequired()

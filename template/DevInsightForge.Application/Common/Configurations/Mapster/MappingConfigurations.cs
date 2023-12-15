@@ -9,6 +9,6 @@ public static class MappingConfigurations
     {
         TypeAdapterConfig<UserModel, UserResponseModel>
             .NewConfig()
-            .Map(dest => dest.UserId, src => src.Id.ToString());
+            .Map(dest => dest.UserId, src => src.Id);
     }
 }
