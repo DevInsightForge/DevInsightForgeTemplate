@@ -19,7 +19,7 @@ builder.Services.AddWebAPIServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure App Pipelines
-app.UseAppExceptionHandler();
+app.UseExceptionHandler();
 app.UseSerilogRequestLogging();
 app.UseSwagger();
 app.UseSwaggerUI();
