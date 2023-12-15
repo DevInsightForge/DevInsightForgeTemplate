@@ -19,8 +19,7 @@ This template serves as a starting point for a DevInsightForge Web API project. 
 - ASP.NET Core Web API project
 - Clean architecture pattern
 - EFCore with SqlServer
-- Domain Driven Desing
-- Strongly-Typed IDs
+- Domain Driven Design
 - Repository pattern
 - JWT Authentication
 - Fluent Validation
@@ -45,4 +44,20 @@ To create a new solution using the DevInsightForge Web API Template, use the fol
 
 ```bash
 dotnet new devforgeapi -n YourSolutionNameHere
+```
+
+## Manage Migrations
+
+To execute migration commands, select [YourProjectName].Infrastructure project in Package Manager Console first.
+
+Run this to apply migrations first time.
+
+```bash
+Update-Database
+```
+
+If runs into any error even with infra as selected project, remove Migration directory from Infrastructure and execute add new migration command.
+
+```bash
+Add-Migration [Your-Migration-Name]
 ```
