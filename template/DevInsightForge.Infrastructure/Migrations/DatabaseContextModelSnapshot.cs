@@ -24,11 +24,9 @@ namespace DevInsightForge.Infrastructure.Migrations
 
             modelBuilder.Entity("DevInsightForge.Domain.Entities.Core.UserModel", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateJoined")
                         .HasColumnType("datetime2");

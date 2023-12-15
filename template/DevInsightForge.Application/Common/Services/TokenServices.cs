@@ -1,5 +1,6 @@
 ﻿using DevInsightForge.Application.Common.Configurations.Settings;
 using DevInsightForge.Application.Common.Exceptions;
+using DevInsightForge.Application.Common.ViewModels.Authentication;
 using DevInsightForge.Application.Common.ViewModels.User;
 using DevInsightForge.Domain.Entities.Core;
 using Microsoft.AspNetCore.Http;
@@ -15,9 +16,6 @@ public class TokenServices(IOptions<JwtSettings> jwtSettings, IHttpContextAccess
 {
     // Custom Claims
     private const string UserIdClaim = ClaimTypes.NameIdentifier;
-    private const string EmailClaim = ClaimTypes.Email;
-    private const string DateJoinedClaim = "dj";
-    private const string LastLoginClaim = "ll";
 
     private readonly IHttpContextAccessor _contextAccessor = contextAccessor ?? throw new ArgumentNullException(nameof(contextAccessor));
     private readonly JwtSettings _jwtSettings = jwtSettings.Value;
@@ -30,27 +28,27 @@ public class TokenServices(IOptions<JwtSettings> jwtSettings, IHttpContextAccess
         return parsedUserId;
     }
 
-    public UserResponseModel GetLoggedInUser()
+    public TokenUserModel GetLoggedInUser()
     {
-        ClaimsPrincipal principal = _contextAccessor?.HttpContext?.User ?? throw new BadRequestException("User claims are not found!");
-        string userTokenId = principal.FindFirstValue(UserIdClaim) ?? throw new BadRequestException("User ID claim not found!");
-        string userEmail = principal.FindFirstValue(EmailClaim) ?? throw new BadRequestException("User Email claim not found!");
-        string userDateJoined = principal.FindFirstValue(DateJoinedClaim) ?? throw new BadRequestException("User DateJoined claim not found!");
-        string userLastLogin = principal.FindFirstValue(LastLoginClaim) ?? throw new BadRequestException("User LastLogin claim not found!");
+        var principal = _contextAccessor?.HttpContext?.User
+            ?? throw new BadRequestException("User claims are not found!");
 
-        long userId = long.TryParse(userTokenId, out var parsedUserId) ? parsedUserId : throw new BadRequestException("User ID claim is not valid!");
-        DateTime dateJoined = DateTime.TryParse(userDateJoined, out var dj) ? dj : throw new BadRequestException("User DateJoined claim is not a valid DateTime");
-        DateTime lastLogin = DateTime.TryParse(userLastLogin, out var ll) ? ll : throw new BadRequestException("User LastLogin claim is not a valid DateTime");
+        var userId = Guid.TryParse(principal.FindFirstValue(UserIdClaim), out var parsedUserId)
+            ? parsedUserId
+            : throw new BadRequestException("User ID claim is not valid!");
 
+        var expiryDateTimeUtc = principal.FindFirstValue("exp") != null &&
+                                long.TryParse(principal.FindFirstValue("exp"), out var expiryUnixTime)
+            ? DateTimeOffset.FromUnixTimeSeconds(expiryUnixTime).UtcDateTime
+            : throw new BadRequestException("Expiration claim not found or invalid!");
 
-        return new UserResponseModel
+        return new TokenUserModel
         {
-            UserId = userId,
-            Email = userEmail,
-            DateJoined = dateJoined,
-            LastLogin = lastLogin
+            UserId = userId.ToString(),
+            ExpiryDate = expiryDateTimeUtc
         };
     }
+
 
     public string GenerateJwtToken(UserModel user, DateTime? expiryDate)
     {
@@ -60,9 +58,6 @@ public class TokenServices(IOptions<JwtSettings> jwtSettings, IHttpContextAccess
         var authClaims = new List<Claim>
         {
             new(UserIdClaim, user.Id.ToString(), ClaimValueTypes.Sid),
-            new(EmailClaim, user.Email, ClaimValueTypes.Email),
-            new(DateJoinedClaim, user.DateJoined.ToString(), ClaimValueTypes.DateTime),
-            new(LastLoginClaim, user.LastLogin.ToString(), ClaimValueTypes.DateTime),
         };
 
         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));

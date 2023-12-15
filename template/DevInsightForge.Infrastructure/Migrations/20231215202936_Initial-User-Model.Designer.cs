@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevInsightForge.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231215194813_Initial-User-Model")]
+    [Migration("20231215202936_Initial-User-Model")]
     partial class InitialUserModel
     {
         /// <inheritdoc />
@@ -27,11 +27,9 @@ namespace DevInsightForge.Infrastructure.Migrations
 
             modelBuilder.Entity("DevInsightForge.Domain.Entities.Core.UserModel", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateJoined")
                         .HasColumnType("datetime2");

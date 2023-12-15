@@ -2,7 +2,6 @@
 using DevInsightForge.Application.Authentication.Commands.RegisterUser;
 using DevInsightForge.Application.Authentication.Queries.GetTokenUser;
 using DevInsightForge.Application.Common.ViewModels.Authentication;
-using DevInsightForge.Application.Common.ViewModels.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +12,7 @@ namespace DevInsightForge.WebAPI.Controllers;
 public class AuthenticationController(ISender sender) : ControllerBase
 {
     [HttpGet(nameof(GetTokenUser))]
-    public async Task<UserResponseModel> GetTokenUser()
+    public async Task<TokenUserModel> GetTokenUser()
     {
         return await sender.Send(new GetTokenUserQuery());
     }

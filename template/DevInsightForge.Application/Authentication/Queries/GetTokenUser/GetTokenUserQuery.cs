@@ -1,13 +1,13 @@
 ﻿using DevInsightForge.Application.Common.Services;
-using DevInsightForge.Application.Common.ViewModels.User;
+using DevInsightForge.Application.Common.ViewModels.Authentication;
 
 namespace DevInsightForge.Application.Authentication.Queries.GetTokenUser;
 
-public sealed record GetTokenUserQuery : IRequest<UserResponseModel>;
+public sealed record GetTokenUserQuery : IRequest<TokenUserModel>;
 
-internal sealed class GetTokenUserQueryHandler(TokenServices tokenServices) : IRequestHandler<GetTokenUserQuery, UserResponseModel>
+internal sealed class GetTokenUserQueryHandler(TokenServices tokenServices) : IRequestHandler<GetTokenUserQuery, TokenUserModel>
 {
-    public Task<UserResponseModel> Handle(GetTokenUserQuery request, CancellationToken cancellationToken)
+    public Task<TokenUserModel> Handle(GetTokenUserQuery request, CancellationToken cancellationToken)
     {
         return Task.FromResult(tokenServices.GetLoggedInUser());
     }
