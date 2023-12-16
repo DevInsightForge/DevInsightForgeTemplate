@@ -1,7 +1,6 @@
 using DevInsightForge.Application;
 using DevInsightForge.Infrastructure;
 using DevInsightForge.WebAPI;
-using DevInsightForge.WebAPI.Extensions;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,10 +18,10 @@ builder.Services.AddWebAPIServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure App Pipelines
-app.UseAppExceptionHandler();
+app.UseExceptionHandler();
 app.UseSerilogRequestLogging();
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(c => c.EnablePersistAuthorization());
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

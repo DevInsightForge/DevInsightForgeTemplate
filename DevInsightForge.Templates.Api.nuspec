@@ -12,8 +12,8 @@
     <license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     
-    <version>3.0.0</version>
-    <releaseNotes>Cleanup and optimized for best use case</releaseNotes>
+    <version>3.0.1</version>
+    <releaseNotes>Simplified domain model and authentication APIs</releaseNotes>
     
     <projectUrl>https://github.com/DevInsightForge/DotNetDevForgeTemplate</projectUrl>
     <repository type="git" url="https://github.com/DevInsightForge/DotNetDevForgeTemplate.git" branch="main" />

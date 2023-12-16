@@ -13,6 +13,9 @@ internal class UserModelConfiguration : BaseEntityConfiguration<UserModel>
 
         builder.ToTable("Users");
 
+        builder.Property(u => u.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(u => u.Email)
             .IsRequired()
             .HasMaxLength(255);

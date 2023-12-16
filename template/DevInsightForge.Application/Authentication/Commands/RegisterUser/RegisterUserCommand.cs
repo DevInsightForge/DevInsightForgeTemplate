@@ -38,7 +38,7 @@ internal sealed class RegisterUserCommandHandler(
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         var expiryDate = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationInMinutes);
-        string accessToken = tokenServices.GenerateJwtToken(user, expiryDate);
+        string accessToken = tokenServices.GenerateJwtToken(user.Id, expiryDate);
 
         return new TokenResponseModel()
         {

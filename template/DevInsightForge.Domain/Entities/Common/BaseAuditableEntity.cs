@@ -2,11 +2,11 @@
 
 namespace DevInsightForge.Domain.Entities.Common;
 
-public abstract class BaseAuditableEntity(long createdBy) : BaseEntity
+public abstract class BaseAuditableEntity(Guid createdBy) : BaseEntity
 {
-    public long CreatedBy { get; private set; } = createdBy;
+    public Guid CreatedBy { get; private set; } = createdBy;
     public DateTime CreatedDate { get; private set; } = DateTime.UtcNow;
-    public long ModifiedBy { get; private set; } = createdBy;
+    public Guid ModifiedBy { get; private set; } = createdBy;
     public DateTime ModifiedDate { get; private set; } = DateTime.UtcNow;
 
     #region Foreign Key Relation
@@ -14,7 +14,7 @@ public abstract class BaseAuditableEntity(long createdBy) : BaseEntity
     public virtual UserModel UpdatedByUser { get; }
     #endregion
 
-    public void UpdateAuditFields(long modifiedBy)
+    public void UpdateAuditFields(Guid modifiedBy)
     {   
         ModifiedBy = modifiedBy;
         ModifiedDate = DateTime.UtcNow;

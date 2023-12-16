@@ -4,6 +4,7 @@ namespace DevInsightForge.Domain.Entities.Core;
 
 public class UserModel : BaseEntity
 {
+    public new Guid Id { get; } = Guid.Empty;
     public string Email { get; private set; } = string.Empty;
     public string NormalizedEmail { get; private set; } = string.Empty;
     public string PasswordHash { get; private set; } = string.Empty;

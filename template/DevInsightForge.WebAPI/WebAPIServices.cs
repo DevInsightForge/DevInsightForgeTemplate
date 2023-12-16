@@ -18,6 +18,9 @@ public static class WebAPIServices
         services.AddSwaggerService();
         services.AddCorsService();
 
+        services.AddExceptionHandler<ExceptionHandlerServiceExtension>();
+        services.AddProblemDetails();
+
         return services;
     }
 }

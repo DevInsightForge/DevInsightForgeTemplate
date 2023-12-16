@@ -1,7 +1,5 @@
 ﻿using DevInsightForge.Application.Common.Configurations.Settings;
 using DevInsightForge.Application.Common.Exceptions;
-using DevInsightForge.Application.Common.ViewModels.User;
-using DevInsightForge.Domain.Entities.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -14,55 +12,27 @@ namespace DevInsightForge.Application.Common.Services;
 public class TokenServices(IOptions<JwtSettings> jwtSettings, IHttpContextAccessor contextAccessor)
 {
     // Custom Claims
-    private const string UserIdClaim = ClaimTypes.NameIdentifier;
-    private const string EmailClaim = ClaimTypes.Email;
-    private const string DateJoinedClaim = "dj";
-    private const string LastLoginClaim = "ll";
 
     private readonly IHttpContextAccessor _contextAccessor = contextAccessor ?? throw new ArgumentNullException(nameof(contextAccessor));
     private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 
-    public long GetLoggedInUserId()
+    public Guid GetLoggedInUserId()
     {
-        var userIdClaim = (_contextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)) ?? throw new BadRequestException("User ID claim not found!");
-        if (!long.TryParse(userIdClaim.Value?.Trim(), out var parsedUserId)) throw new BadRequestException("User ID claim is not valid!");
+        var userIdClaim = (_contextAccessor?.HttpContext?.User?.FindFirst(JwtRegisteredClaimNames.Sid)) ?? throw new BadRequestException("User ID claim not found!");
+        if (!Guid.TryParse(userIdClaim.Value?.Trim(), out var parsedUserId)) throw new BadRequestException("User ID claim is not valid!");
 
         return parsedUserId;
     }
 
-    public UserResponseModel GetLoggedInUser()
+    public string GenerateJwtToken(Guid userId, DateTime? expiryDate)
     {
-        ClaimsPrincipal principal = _contextAccessor?.HttpContext?.User ?? throw new BadRequestException("User claims are not found!");
-        string userTokenId = principal.FindFirstValue(UserIdClaim) ?? throw new BadRequestException("User ID claim not found!");
-        string userEmail = principal.FindFirstValue(EmailClaim) ?? throw new BadRequestException("User Email claim not found!");
-        string userDateJoined = principal.FindFirstValue(DateJoinedClaim) ?? throw new BadRequestException("User DateJoined claim not found!");
-        string userLastLogin = principal.FindFirstValue(LastLoginClaim) ?? throw new BadRequestException("User LastLogin claim not found!");
-
-        long userId = long.TryParse(userTokenId, out var parsedUserId) ? parsedUserId : throw new BadRequestException("User ID claim is not valid!");
-        DateTime dateJoined = DateTime.TryParse(userDateJoined, out var dj) ? dj : throw new BadRequestException("User DateJoined claim is not a valid DateTime");
-        DateTime lastLogin = DateTime.TryParse(userLastLogin, out var ll) ? ll : throw new BadRequestException("User LastLogin claim is not a valid DateTime");
-
-
-        return new UserResponseModel
-        {
-            UserId = userId,
-            Email = userEmail,
-            DateJoined = dateJoined,
-            LastLogin = lastLogin
-        };
-    }
-
-    public string GenerateJwtToken(UserModel user, DateTime? expiryDate)
-    {
-        ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(userId, nameof(userId));
         expiryDate ??= DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationInMinutes);
 
         var authClaims = new List<Claim>
         {
-            new(UserIdClaim, user.Id.ToString(), ClaimValueTypes.Sid),
-            new(EmailClaim, user.Email, ClaimValueTypes.Email),
-            new(DateJoinedClaim, user.DateJoined.ToString(), ClaimValueTypes.DateTime),
-            new(LastLoginClaim, user.LastLogin.ToString(), ClaimValueTypes.DateTime),
+            new(JwtRegisteredClaimNames.Sid, userId.ToString(), ClaimValueTypes.Sid),
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
 
         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));

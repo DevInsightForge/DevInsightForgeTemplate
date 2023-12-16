@@ -7,7 +7,6 @@
 This template provides a foundation for building a DevInsightForge Web API project using C#.
 
 - **Identity**: DevInsightForge.Templates.Api
-- **Version**: 1.0.0
 - **License**: [MIT](https://opensource.org/licenses/MIT)
 
 ## Description
