@@ -1,4 +1,5 @@
 ﻿using DevInsightForge.Application.Common.Configurations.Settings;
+using DevInsightForge.Application.Common.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace DevInsightForge.Application.Common.Services;
 
-public class TokenServices(IOptions<JwtSettings> jwtSettings)
+public class TokenServices(IOptions<JwtSettings> jwtSettings) : ITokenService
 {
     private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 

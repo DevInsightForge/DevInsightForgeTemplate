@@ -1,8 +1,8 @@
 ﻿using DevInsightForge.Application.Common.Configurations.Settings;
 using DevInsightForge.Application.Common.Exceptions;
+using DevInsightForge.Application.Common.Interfaces;
 using DevInsightForge.Application.Common.Interfaces.DataAccess;
 using DevInsightForge.Application.Common.Interfaces.DataAccess.Repositories;
-using DevInsightForge.Application.Common.Services;
 using DevInsightForge.Application.Common.ViewModels.Authentication;
 using DevInsightForge.Domain.Entities.Core;
 using Microsoft.AspNetCore.Identity;
@@ -26,7 +26,7 @@ internal sealed class AuthenticateUserCommandHandler(
     IOptions<JwtSettings> jwtSettings,
     IUserRepository userRepository,
     IUnitOfWork unitOfWork,
-    TokenServices tokenServices) : IRequestHandler<AuthenticateUserCommand, TokenResponseModel>
+    ITokenService tokenServices) : IRequestHandler<AuthenticateUserCommand, TokenResponseModel>
 {
     private readonly JwtSettings _jwtSettings = jwtSettings.Value;
 
