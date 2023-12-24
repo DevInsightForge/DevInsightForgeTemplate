@@ -3,7 +3,9 @@ using DevInsightForge.Application.Common.Interfaces.DataAccess.Repositories;
 using DevInsightForge.Infrastructure.DataAccess;
 using DevInsightForge.Infrastructure.DataAccess.Repositories;
 using DevInsightForge.Infrastructure.Persistence;
+using DevInsightForge.Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,8 +16,14 @@ public static class InfrastructureServices
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         // Configure DbContext provider
-        services.AddDbContext<DatabaseContext>(options => 
-            options.UseSqlServer(configuration.GetConnectionString("DatabaseServer")));
+        services.AddDbContext<DatabaseContext>((sp, options) =>
+        {
+            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+            options.UseSqlServer(configuration.GetConnectionString("DatabaseServer"));
+        });
+
+        // Configure DbContext interceptor
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
 
         // Register data-access services
         services.AddScoped<IUnitOfWork, UnitOfWork>();

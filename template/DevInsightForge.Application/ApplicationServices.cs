@@ -1,8 +1,11 @@
 ﻿using DevInsightForge.Application.Common.Behaviours;
 using DevInsightForge.Application.Common.Configurations.Mapster;
 using DevInsightForge.Application.Common.Configurations.Settings;
+using DevInsightForge.Application.Common.Interfaces;
+using DevInsightForge.Application.Common.Interfaces.Core;
 using DevInsightForge.Application.Common.Services;
 using DevInsightForge.Domain.Entities.Core;
+using DevInsightForge.WebAPI.Services;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
@@ -36,9 +39,14 @@ public static class ApplicationServices
         TypeAdapterConfig.GlobalSettings.Default.NameMatchingStrategy(NameMatchingStrategy.Flexible);
         MappingConfigurations.ConfigureMappings();
 
+        // Bind context user as authenticated user
+        services.AddScoped<IAuthenticatedUser, AuthenticatedUser>();
+
         // Inject password hasher
         services.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
-        services.AddScoped<TokenServices>();
+
+        // Register application services
+        services.AddScoped<ITokenService, TokenServices>();
 
         return services;
     }

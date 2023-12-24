@@ -1,5 +1,6 @@
-﻿using DevInsightForge.Application.Common.Interfaces.DataAccess.Repositories;
-using DevInsightForge.Application.Common.Services;
+﻿using DevInsightForge.Application.Common.Exceptions;
+using DevInsightForge.Application.Common.Interfaces.Core;
+using DevInsightForge.Application.Common.Interfaces.DataAccess.Repositories;
 using DevInsightForge.Application.Common.ViewModels.User;
 using DevInsightForge.Domain.Entities.Core;
 
@@ -9,14 +10,11 @@ public sealed record GetTokenUserQuery : IRequest<UserResponseModel>;
 
 internal sealed class GetTokenUserQueryHandler(
     IUserRepository userRepository, 
-    TokenServices tokenServices) : IRequestHandler<GetTokenUserQuery, UserResponseModel>
+    IAuthenticatedUser authenticatedUser) : IRequestHandler<GetTokenUserQuery, UserResponseModel>
 {
     public async Task<UserResponseModel> Handle(GetTokenUserQuery request, CancellationToken cancellationToken)
     {
-        Guid userId = tokenServices.GetLoggedInUserId();
-        UserModel? user = await userRepository.GetWhereAsync(u => u.Id.Equals(userId));
-        ArgumentNullException.ThrowIfNull(user, "No user found from the token");
-
-        return user.Adapt<UserResponseModel>();
+        UserModel? user = await userRepository.GetWhereAsync(u => u.Id.Equals(authenticatedUser.UserId));
+        return user is null ? throw new NotFoundException("Token user is not found") : user.Adapt<UserResponseModel>();
     }
 }
