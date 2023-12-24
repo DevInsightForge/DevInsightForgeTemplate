@@ -13,12 +13,12 @@ where TBase : BaseAuditableEntity
 
         builder.HasOne(t => t.CreatedByUser)
             .WithMany()
-            .HasForeignKey(t => t.CreatedBy)
+            .HasForeignKey(t => t.CreatedByUserId)
             .IsRequired();
 
-        builder.HasOne(t => t.UpdatedByUser)
+        builder.HasOne(t => t.ModifiedByUser)
             .WithMany()
-            .HasForeignKey(t => t.ModifiedBy)
+            .HasForeignKey(t => t.ModifiedByUserId)
             .IsRequired();
     }
 }

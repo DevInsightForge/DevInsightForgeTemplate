@@ -2,24 +2,29 @@
 
 namespace DevInsightForge.Domain.Entities.Common;
 
-public abstract class BaseAuditableEntity(Guid createdBy) : BaseEntity
+public abstract class BaseAuditableEntity : BaseEntity
 {
-    public Guid CreatedBy { get; private set; } = createdBy;
-    public DateTime CreatedDate { get; private set; } = DateTime.UtcNow;
-    public Guid ModifiedBy { get; private set; } = createdBy;
-    public DateTime ModifiedDate { get; private set; } = DateTime.UtcNow;
+    public Guid? CreatedByUserId { get; private set; }
+    public DateTime CreatedOn { get; private set; }
+    public Guid? ModifiedByUserId { get; private set; }
+    public DateTime ModifiedOn { get; private set; }
 
-    #region Foreign Key Relation
+    #region Foreign Key Relations
     public virtual UserModel? CreatedByUser { get; }
-    public virtual UserModel? UpdatedByUser { get; }
+    public virtual UserModel? ModifiedByUser { get; }
     #endregion
 
-    public void UpdateAuditFields(Guid modifiedBy)
-    {   
-        ModifiedBy = modifiedBy;
-        ModifiedDate = DateTime.UtcNow;
+    public void SetCreationAudit(Guid? createdByUserId)
+    {
+        CreatedByUserId = createdByUserId;
+        CreatedOn = DateTime.UtcNow;
     }
 
-    public bool HasBeenModified() => CreatedDate != ModifiedDate;
+    public void SetModificationAudit(Guid? modifiedByUserId)
+    {
+        ModifiedByUserId = modifiedByUserId;
+        ModifiedOn = DateTime.UtcNow;
+    }
 
+    public bool HasBeenModified() => CreatedOn != ModifiedOn;
 }
