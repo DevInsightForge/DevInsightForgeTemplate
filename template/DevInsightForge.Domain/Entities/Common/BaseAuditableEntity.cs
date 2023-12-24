@@ -10,8 +10,8 @@ public abstract class BaseAuditableEntity(Guid createdBy) : BaseEntity
     public DateTime ModifiedDate { get; private set; } = DateTime.UtcNow;
 
     #region Foreign Key Relation
-    public virtual UserModel CreatedByUser { get; }
-    public virtual UserModel UpdatedByUser { get; }
+    public virtual UserModel? CreatedByUser { get; }
+    public virtual UserModel? UpdatedByUser { get; }
     #endregion
 
     public void UpdateAuditFields(Guid modifiedBy)

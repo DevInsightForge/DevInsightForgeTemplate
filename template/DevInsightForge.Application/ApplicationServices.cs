@@ -1,8 +1,10 @@
 ﻿using DevInsightForge.Application.Common.Behaviours;
 using DevInsightForge.Application.Common.Configurations.Mapster;
 using DevInsightForge.Application.Common.Configurations.Settings;
+using DevInsightForge.Application.Common.Interfaces.Core;
 using DevInsightForge.Application.Common.Services;
 using DevInsightForge.Domain.Entities.Core;
+using DevInsightForge.WebAPI.Services;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +17,9 @@ public static class ApplicationServices
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
+        // Bind context user as authenticated user
+        services.AddScoped<IAuthenticatedUser, AuthenticatedUser>();
+
         // Inject and Configure Mediatr
         services.AddMediatR(cfg =>
         {

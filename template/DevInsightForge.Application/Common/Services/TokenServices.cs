@@ -1,6 +1,4 @@
 ﻿using DevInsightForge.Application.Common.Configurations.Settings;
-using DevInsightForge.Application.Common.Exceptions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,20 +7,9 @@ using System.Text;
 
 namespace DevInsightForge.Application.Common.Services;
 
-public class TokenServices(IOptions<JwtSettings> jwtSettings, IHttpContextAccessor contextAccessor)
+public class TokenServices(IOptions<JwtSettings> jwtSettings)
 {
-    // Custom Claims
-
-    private readonly IHttpContextAccessor _contextAccessor = contextAccessor ?? throw new ArgumentNullException(nameof(contextAccessor));
     private readonly JwtSettings _jwtSettings = jwtSettings.Value;
-
-    public Guid GetLoggedInUserId()
-    {
-        var userIdClaim = (_contextAccessor?.HttpContext?.User?.FindFirst(JwtRegisteredClaimNames.Sid)) ?? throw new BadRequestException("User ID claim not found!");
-        if (!Guid.TryParse(userIdClaim.Value?.Trim(), out var parsedUserId)) throw new BadRequestException("User ID claim is not valid!");
-
-        return parsedUserId;
-    }
 
     public string GenerateJwtToken(Guid userId, DateTime? expiryDate)
     {
