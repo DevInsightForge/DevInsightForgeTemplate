@@ -16,12 +16,16 @@ public abstract class BaseAuditableEntity : BaseEntity
 
     public void SetCreationAudit(Guid? createdByUserId)
     {
+        if (createdByUserId is null) return;
+
         CreatedByUserId = createdByUserId;
         CreatedOn = DateTime.UtcNow;
     }
 
     public void SetModificationAudit(Guid? modifiedByUserId)
     {
+        if (modifiedByUserId is null) return;
+
         ModifiedByUserId = modifiedByUserId;
         ModifiedOn = DateTime.UtcNow;
     }
