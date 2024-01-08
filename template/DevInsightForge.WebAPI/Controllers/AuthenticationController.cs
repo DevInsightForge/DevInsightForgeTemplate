@@ -1,4 +1,5 @@
 ﻿using DevInsightForge.Application.Authentication.Commands.AuthenticateUser;
+using DevInsightForge.Application.Authentication.Commands.RefreshAccessToken;
 using DevInsightForge.Application.Authentication.Commands.RegisterUser;
 using DevInsightForge.Application.Authentication.Queries.GetTokenUser;
 using DevInsightForge.Application.Common.ViewModels.Authentication;
@@ -28,6 +29,13 @@ public class AuthenticationController(ISender sender) : ControllerBase
     [AllowAnonymous]
     [HttpPost(nameof(AuthenticateUser))]
     public async Task<TokenResponseModel> AuthenticateUser(AuthenticateUserCommand command)
+    {
+        return await sender.Send(command);
+    }
+
+    [AllowAnonymous]
+    [HttpPost(nameof(RefreshAccessToken))]
+    public async Task<TokenResponseModel> RefreshAccessToken(RefreshAccessTokenCommand command)
     {
         return await sender.Send(command);
     }

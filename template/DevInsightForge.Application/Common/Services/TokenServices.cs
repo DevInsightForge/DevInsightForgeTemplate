@@ -53,4 +53,12 @@ public class TokenServices(IOptions<JwtSettings> jwtSettings,
 
         return userToken.RefreshToken;
     }
+
+    public async Task<UserTokenModel?> GetValidRefreshToken(string refreshToken)
+    {
+        return await userTokenRepository.GetWhereAsync(x =>
+                    x.RefreshToken == refreshToken &&
+                    x.IsRevoked == false &&
+                    x.ExpiresAt > DateTime.UtcNow);
+    }
 }
