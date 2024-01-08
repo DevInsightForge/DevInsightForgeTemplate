@@ -28,6 +28,7 @@ public static class InfrastructureServices
         // Register data-access services
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserTokenRepository, UserTokenRepository>();
 
         return services;
     }

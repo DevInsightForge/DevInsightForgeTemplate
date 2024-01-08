@@ -37,13 +37,17 @@ internal sealed class RegisterUserCommandHandler(
         await userRepository.AddAsync(user, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var expiryDate = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationInMinutes);
-        string accessToken = tokenServices.GenerateJwtToken(user.Id, expiryDate);
+        var jwtExpiryDate = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationInMinutes);
+        var refreshExpiryDate = DateTime.UtcNow.AddMinutes(_jwtSettings.RefreshTokenExpirationInMinutes);
+
+        string accessToken = tokenServices.GenerateJwtToken(user.Id, jwtExpiryDate);
+        string refreshToken = await tokenServices.GenerateRefreshTokenAsync(user.Id, refreshExpiryDate);
 
         return new TokenResponseModel()
         {
+            RefreshToken = refreshToken,
             AccessToken = accessToken,
-            AccessExpiresAt = expiryDate
+            AccessExpiresAt = jwtExpiryDate
         };
     }
 }
