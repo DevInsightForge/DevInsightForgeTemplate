@@ -28,8 +28,9 @@ internal sealed class RefreshAccessTokenCommandHandler(
         return new TokenResponseModel()
         {
             RefreshToken = userToken.RefreshToken,
+            RefreshTokenExpiresAt = userToken.ExpiresAt,
             AccessToken = accessToken,
-            AccessExpiresAt = jwtExpiryDate
+            AccessTokenExpiresAt = jwtExpiryDate
         };
     }
 }

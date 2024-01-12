@@ -32,6 +32,7 @@ app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.UseCors();
 
 // Run application
 app.Run();

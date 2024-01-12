@@ -46,8 +46,9 @@ internal sealed class RegisterUserCommandHandler(
         return new TokenResponseModel()
         {
             RefreshToken = refreshToken,
+            RefreshTokenExpiresAt = refreshExpiryDate,
             AccessToken = accessToken,
-            AccessExpiresAt = jwtExpiryDate
+            AccessTokenExpiresAt = jwtExpiryDate
         };
     }
 }
