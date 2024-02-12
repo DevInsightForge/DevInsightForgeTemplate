@@ -19,7 +19,7 @@ public static class InfrastructureServices
         services.AddDbContext<DatabaseContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-            options.UseSqlServer(configuration.GetConnectionString("DatabaseServer"));
+            options.UseNpgsql(configuration.GetConnectionString("DatabaseServer"));
         });
 
         // Configure DbContext interceptor

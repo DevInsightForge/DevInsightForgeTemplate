@@ -7,6 +7,7 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
 {
     #region Entity DB Set Registrations
     public DbSet<UserModel> Users { get; set; }
+    public DbSet<UserTokenModel> UserTokens { get; set; }
 
     #endregion
 
