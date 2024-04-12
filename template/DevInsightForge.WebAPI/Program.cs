@@ -1,6 +1,5 @@
 using DevInsightForge.Application;
 using DevInsightForge.Infrastructure;
-using DevInsightForge.Infrastructure.Persistence.Extensions;
 using DevInsightForge.WebAPI;
 using Serilog;
 
@@ -19,16 +18,10 @@ builder.Services.AddWebAPIServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure App Pipelines
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.EnablePersistAuthorization());
-
-    app.ApplyMigrations();
-}
-
 app.UseExceptionHandler();
 app.UseSerilogRequestLogging();
+app.UseSwagger();
+app.UseSwaggerUI(c => c.EnablePersistAuthorization());
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
